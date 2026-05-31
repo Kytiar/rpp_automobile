@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удалить лайк</title>
+</head>
+<body>
+    <h1>Удалить лайк на пост "{{ like.post.title }}"?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить лайк</button>
+    </form>
+    <a href="{% url 'post_detail' like.post.pk %}">Отмена</a>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!-- templates/blog/post_list.html -->
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <h1>Все посты</h1>
+
+    <div>
+        <h3>Категории:</h3>
+        <ul>
+            {% for category in categories %}
+                <li><a href="{% url 'blog:category_detail' category.pk %}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% for post in posts %}
+        <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+            <h2><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h2>
+            <p>Автор: {{ post.author.user.username }}</p>
+            <p>Лайков: {{ post.likes.count }}</p>
+            <p>Категории:
+                {% for category in post.categories.all %}
+                    {{ category.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Лайкнуть пост</title>
+</head>
+<body>
+    <h1>Лайкнуть пост "{{ post.title }}"?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Лайкнуть</button>
+    </form>
+    <a href="{% url 'post_detail' post.pk %}">Отмена</a>
+</body>
+</html>

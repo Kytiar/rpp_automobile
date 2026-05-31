@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if form.instance.pk %}Редактировать категорию{% else %}Добавить категорию{% endif %}</title>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Редактировать категорию{% else %}Добавить категорию{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="{% url 'category_list' %}">Отмена</a>
+</body>
+</html>

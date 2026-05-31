@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удалить автора?</title>
+</head>
+<body>
+    <h1>Удалить автора "{{ author.nickname }}"?</h1>
+    <p>Вы уверены, что хотите удалить этого автора? Все его посты также будут удалены.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+    </form>
+    <a href="{% url 'author_detail' author.pk %}">Отмена</a>
+</body>
+</html>

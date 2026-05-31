@@ -1,0 +1,16 @@
+<!-- templates/blog/category_detail.html -->
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <h1>Посты в категории: {{ category.name }}</h1>
+
+    {% for post in posts %}
+        <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+            <h2><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h2>
+            <p>Автор: {{ post.author.user.username }}</p>
+            <p>Лайков: {{ post.likes.count }}</p>
+        </div>
+    {% endfor %}
+
+    <a href="{% url 'blog:post_list' %}">Назад к списку постов</a>
+{% endblock %}

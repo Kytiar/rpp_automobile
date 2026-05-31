@@ -1,0 +1,47 @@
+<!-- templates/blog/post_detail.html -->
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <article>
+        <h1>{{ post.title }}</h1>
+        <p>Автор: {{ post.author.user.username }}</p>
+        <p>Дата публикации: {{ post.created_at|date:"d.m.Y H:i" }}</p>
+        <p>Лайков: {{ post.likes.count }}</p>
+
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'blog:post_like' post.pk %}">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if is_liked %}Убрать лайк{% else %}Лайкнуть{% endif %}
+                </button>
+            </form>
+        {% endif %}
+
+        <div style="margin: 20px 0;">{{ post.content|linebreaks }}</div>
+
+        <h3>Категории:</h3>
+        <ul>
+            {% for category in post.categories.all %}
+                <li>{{ category.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Добавляем кнопки управления -->
+        {% if user.is_authenticated %}
+            <div style="margin-top: 20px;">
+                {% if user.profile.role == 'admin' or user == post.author.user or user.profile.role == 'editor' %}
+                    <a href="{% url 'blog:post_edit' post.pk %}" class="btn btn-primary">Редактировать</a>
+                {% endif %}
+
+                {% if user.profile.role == 'admin' or user == post.author.user %}
+                    <form method="post" action="{% url 'blog:post_delete' post.pk %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить этот пост?')">Удалить</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endif %}
+    </article>
+
+    <a href="{% url 'blog:post_list' %}">Назад к списку постов</a>
+{% endblock %}

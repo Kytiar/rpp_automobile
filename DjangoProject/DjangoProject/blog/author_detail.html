@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ author.nickname }}</title>
+</head>
+<body>
+    <h1>{{ author.nickname }}</h1>
+    <p>Email: {{ author.email }}</p>
+    <p>Bio: {{ author.bio }}</p>
+
+    {% if user.profile.role == 'administrator' %}
+        <a href="{% url 'author_update' author.pk %}">Редактировать</a>
+        <a href="{% url 'author_delete' author.pk %}">Удалить</a>
+    {% endif %}
+    <a href="{% url 'author_list' %}">Назад к списку авторов</a>
+</body>
+</html>
